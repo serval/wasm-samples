@@ -1,9 +1,9 @@
 /// This program converts any standard input to a format that can be understood by
 /// a LOUDBOT compatible agent such as [LOUDCRAB](https://github.com/ceejbot/LOUDCRAB).
-use std::io;
+use std::io::{self, Read};
 
 fn main() {
-    let input_lines = io::stdin().lines();
-    let output: Vec<String> = input_lines.flatten().map(|v| v.to_uppercase()).collect();
-    println!("{}", output.join("\n"));
+    let mut input = String::new();
+    _ = io::stdin().read_to_string(&mut input);
+    println!("{}", input.to_uppercase());
 }
