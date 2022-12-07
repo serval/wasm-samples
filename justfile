@@ -7,9 +7,11 @@ help:
     set -e
 
     mkdir -p build
-    for example in wasi-hello-world; do
-        cd $example
-        cargo build --release --target wasm32-wasi
-        cp target/wasm32-wasi/release/*.wasm ../build/
-        cd ..
+    for example in *; do
+        if [ -d "$example" ] && [ "$example" != "build" ]; then
+            cd $example
+            cargo build --release --target wasm32-wasi
+            cp target/wasm32-wasi/release/*.wasm ../build/
+            cd ..
+        fi
     done
