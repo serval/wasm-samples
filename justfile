@@ -2,15 +2,19 @@
 help:
     just -l
 
-@build:
+# Build all examples & put them in ./build
+build:
     #!/bin/bash
     set -e
 
+    dirs=$(echo */)
     mkdir -p build
-    for example in *; do
+    for example in $dirs; do
+        example=${example%/}
         if [ -d "$example" ] && [ "$example" != "build" ]; then
             cd $example
-            cargo build --release --target wasm32-wasi
+            echo "building ${example}.wasm"
+            cargo build --release --target wasm32-wasi --quiet
             cp target/wasm32-wasi/release/*.wasm ../build/
             cd ..
         fi
