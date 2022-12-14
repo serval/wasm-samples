@@ -1,0 +1,18 @@
+# List available recipes
+help:
+    just -l
+
+# Build all examples & put them in ./build
+build:
+    #!/bin/bash
+    set -e
+    if which wasicc ; then
+        mkdir -p target
+        wasicc wasienv-greet.c -o target/wasienv-greet
+    else
+        echo "Wasienv toolchain needs to be installed."
+        echo "See the README and https://github.com/wasienv/wasienv for details."
+    fi
+
+@list-wasm:
+    echo "target/wasienv-greet.wasm"
