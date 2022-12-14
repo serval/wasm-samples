@@ -22,7 +22,7 @@ build:
                 just build
                 # We also assume a just list-wasm command is provided.
                 just list-wasm | while read line ; do cp $line ../build/ ; done
-                cd ..
             fi
+            cd ..
         fi
     done
