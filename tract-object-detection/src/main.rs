@@ -61,7 +61,6 @@ fn main() -> TractResult<()> {
     for (confidence, _, label) in sorted {
         println!("{label} ({:.2}%)", (confidence * 100.0));
     }
-    // let best = sorted.last();
-    // println!("result: {:?}", best);
+
     Ok(())
 }
