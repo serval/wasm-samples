@@ -42,7 +42,7 @@ academic gown (5.73%)
 `release` builds are noticeably faster than `debug` builds:
 
 ```sh
-cargo build --target wasm32-wasi --release
+just build --target wasm32-wasi --release
 ```
 
 Then, from the `serval-mesh` project (assuming this repository is checked out as a sibling directory):
