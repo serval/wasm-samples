@@ -1,0 +1,19 @@
+# List available recipes
+help:
+    just -l
+
+# Downloads 
+@build:
+    just get-models
+    cargo build --target wasm32-wasi --release
+    wasm-opt -Oz target/wasm32-wasi/release/tract-object-detection.wasm -o target/wasm32-wasi/release/shrunk.wasm
+    mv target/wasm32-wasi/release/shrunk.wasm target/wasm32-wasi/release/tract-object-detection.wasm
+    echo 👍 Done
+
+@get-models:
+    wget --continue --quiet https://storage.googleapis.com/mobilenet_v2/checkpoints/mobilenet_v2_1.4_224.tgz
+    tar zxf mobilenet_v2_1.4_224.tgz
+
+@run:
+    just get-models
+    cargo run $@
