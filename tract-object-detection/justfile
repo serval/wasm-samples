@@ -11,8 +11,9 @@ help:
     echo 👍 Done
 
 @get-models:
-    wget --continue --quiet https://storage.googleapis.com/mobilenet_v2/checkpoints/mobilenet_v2_1.4_224.tgz
-    tar zxf mobilenet_v2_1.4_224.tgz
+    mkdir -p models
+    wget --continue --quiet https://storage.googleapis.com/mobilenet_v2/checkpoints/mobilenet_v2_1.4_224.tgz --output-document $TMPDIR/mobilenet_v2_1.4_224.tgz
+    tar zxf $TMPDIR/mobilenet_v2_1.4_224.tgz -C models
 
 @run:
     just get-models
