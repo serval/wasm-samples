@@ -6,7 +6,7 @@ use tract_tensorflow::tract_hir::internal::anyhow;
 
 fn main() -> TractResult<()> {
     // load the labels
-    let labels_str = include_str!("/Users/mark/Code/servals/research/tract/examples/tensorflow-mobilenet-v2/imagenet_slim_labels.txt");
+    let labels_str = include_str!("../imagenet_slim_labels.txt");
     let labels: Vec<_> = labels_str.lines().collect();
 
     let mut model_data: &[u8] = include_bytes!("../models/mobilenet_v2_1.4_224_frozen.pb");
