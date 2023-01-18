@@ -3,26 +3,33 @@ help:
     just -l
 
 # Build all examples & put them in ./build
-build:
+build PROJECT='':
     #!/bin/bash
     set -e
 
-    dirs=$(echo */)
-    mkdir -p build
-    for example in $dirs; do
-        example=${example%/}
-        if [ -d "$example" ] && [ "$example" != "build" ]; then
-            cd $example
-            echo "building ${example}.wasm"
-            if test -f "Cargo.toml"; then
-                cargo build --release --target wasm32-wasi --quiet
-                cp target/wasm32-wasi/release/*.wasm ../build/
-            else
-                # If it is not a cargo project, we assume a just build command is provided.
-                just build
-                # We also assume a just list-wasm command is provided.
-                just list-wasm | while read line ; do cp $line ../build/ ; done
+    if [ "{{PROJECT}}" == "" ]; then
+        # If not given a particular project to build, build everything.
+        dirs=$(echo */)
+        for example in $dirs; do
+            example=${example%/}
+            if [ -d "$example" ] && [ "$example" != "build" ]; then
+                just build $example
             fi
-            cd ..
-        fi
-    done
+        done
+        exit
+    fi
+
+    mkdir -p build
+    example={{PROJECT}}
+    cd $example
+    echo "Building ${example}.wasm ..."
+    if test -f "Cargo.toml"; then
+        cargo build --release --target wasm32-wasi --quiet
+        cp target/wasm32-wasi/release/*.wasm ../build/
+    else
+        # If it is not a cargo project, we assume a just build command is provided.
+        just build
+        # We also assume a just list-wasm command is provided.
+        just list-wasm | while read line ; do cp $line ../build/ ; done
+    fi
+    cd ..
