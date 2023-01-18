@@ -48,5 +48,5 @@ just build --target wasm32-wasi --release
 Then, from the `serval-mesh` project (assuming this repository is checked out as a sibling directory):
 
 ```sh
-cargo run --bin pounce -- run ../wasm-samples/tract-object-detection/target/wasm32-wasi/release/tract-object-detection.wasm ../wasm-samples/tract-object-detection/examples/grace_hopper.jpg
+just run --bin pounce -- run ../wasm-samples/tract-object-detection/target/wasm32-wasi/release/tract-object-detection.wasm ../wasm-samples/tract-object-detection/examples/grace_hopper.jpg
 ```
