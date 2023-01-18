@@ -25,6 +25,7 @@ build PROJECT='':
     echo "Building ${example}.wasm ..."
     if test -f "Cargo.toml"; then
         cargo build --release --target wasm32-wasi --quiet
+        find target/wasm32-wasi/release/*.wasm | xargs -n1 -I'{}' wasm-opt '{}' -Oz -o '{}'
         cp target/wasm32-wasi/release/*.wasm ../build/
     else
         # If it is not a cargo project, we assume a just build command is provided.
