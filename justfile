@@ -32,6 +32,7 @@ build PROJECT='':
     else
         # If there is no justfile, we simply `cargo build` and grab the output.
         cargo build --release --target wasm32-wasi --quiet
+        find target/wasm32-wasi/release/*.wasm | xargs -n1 -I'{}' wasm-opt '{}' -Oz -o '{}'
         cp target/wasm32-wasi/release/*.wasm ../build/
     fi
     cd ..
