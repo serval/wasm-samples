@@ -23,13 +23,15 @@ build PROJECT='':
     example={{PROJECT}}
     cd $example
     echo "Building ${example}.wasm ..."
-    if test -f "Cargo.toml"; then
-        cargo build --release --target wasm32-wasi --quiet
-        cp target/wasm32-wasi/release/*.wasm ../build/
-    else
-        # If it is not a cargo project, we assume a just build command is provided.
+    if test -f "justfile"; then
+        # > (you should assume just is there)
+        #                     --ceejbot, 2023
         just build
         # We also assume a just list-wasm command is provided.
         just list-wasm | while read line ; do cp $line ../build/ ; done
+    else
+        # If there is no justfile, we simply `cargo build` and grab the output.
+        cargo build --release --target wasm32-wasi --quiet
+        cp target/wasm32-wasi/release/*.wasm ../build/
     fi
     cd ..
