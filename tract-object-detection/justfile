@@ -2,8 +2,12 @@
 help:
     just -l
 
+# Install tool dependencies
+@deps:
+    cargo install wasm-opt
+
 # Downloads 
-@build:
+@build: deps
     just get-models
     cargo build --target wasm32-wasi --release
     wasm-opt -Oz target/wasm32-wasi/release/tract-object-detection.wasm -o target/wasm32-wasi/release/shrunk.wasm
