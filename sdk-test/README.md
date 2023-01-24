@@ -1,3 +1,3 @@
-# call-a-host-function
+# sdk-test
 
-A demo to show how to call a function that's been exposed by the host runtime.
+A demo to exercise various bits of [the SDK](https://github.com/servals/sdk).
