@@ -38,5 +38,16 @@ build PROJECT='':
     fi
     cd ..
 
+build-and-run PROJECT BINARY='':
+    #!/bin/bash
+    just build {{PROJECT}}
+    if [ "{{BINARY}}" == "" ]; then
+        BINARY=build/{{PROJECT}}.wasm
+    else
+        BINARY={{BINARY}}
+    fi
+    pushd ../serval-mesh
+    cargo run --bin serval -- run ../wasm-samples/${BINARY}
+
 clean:
     rm build/*.wasm
