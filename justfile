@@ -37,3 +37,6 @@ build PROJECT='':
         cp target/wasm32-wasi/release/*.wasm ../build/
     fi
     cd ..
+
+clean:
+    rm build/*.wasm
