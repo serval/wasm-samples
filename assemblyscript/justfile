@@ -1,0 +1,12 @@
+help:
+    just -l
+
+build:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    npm install --silent
+    mkdir -p out
+    find src/*.ts | xargs -n1 -I '{}' -- npx asbuild {}
+
+list-wasm:
+    find build/release/*.wasm
