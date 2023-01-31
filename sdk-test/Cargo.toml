@@ -7,4 +7,4 @@ edition = "2021"
 
 [dependencies]
 #serval = { path = "../../sdk" }
-serval = { git = "https://github.com/servals/sdk" }
+serval = { git = "https://github.com/serval/sdk" }

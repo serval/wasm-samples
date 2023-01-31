@@ -18,7 +18,7 @@ dependencies = [
 [[package]]
 name = "serval"
 version = "0.1.0"
-source = "git+https://github.com/servals/sdk#e319f8174b99d875d2b2d3ef228c337c4c1c7d9d"
+source = "git+https://github.com/serval/sdk#d7be9c74b8db087e5b62c28a668217817fca6587"
 dependencies = [
  "anyhow",
 ]
