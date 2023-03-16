@@ -37,13 +37,15 @@ fn main() {
 
     println!("Fetching {}", req.uri());
     let mut res = wasi_experimental_http::request(req).expect("cannot make request");
+    println!("Status code: {:#?}", res.status_code);
+    println!("Headers:");
+    if let Ok(headers) = res.headers_get_all() {
+        for (name, value) in headers.iter() {
+            println!("- {name}: {value:?}");
+        }
+    }
     let str = std::str::from_utf8(&res.body_read_all().unwrap())
         .unwrap()
         .to_string();
-    println!(
-        "Content-type header: {:#?}",
-        res.header_get(String::from("Content-Type"))
-    );
-    println!("HTTP body: {}", str);
-    println!("Status code: {:#?}", res.status_code);
+    println!("Body:\n{str}");
 }
