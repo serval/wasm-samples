@@ -1,0 +1,7 @@
+name = "serval-facts"
+namespace = "sh.serval"
+binary = "../build/serval-facts.wasm"
+version = "1"
+description = "fun facts"
+required_extensions = []
+
