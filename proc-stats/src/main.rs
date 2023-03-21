@@ -1,7 +1,7 @@
 use std::{collections::HashMap, fs};
 
 use serde::Serialize;
-use serde_json::{json, Map, Value};
+use serde_json::Map;
 
 fn mem_info() -> HashMap<String, String> {
     fs::read_to_string("/proc/meminfo")
@@ -108,5 +108,5 @@ fn main() {
         //
     });
 
-    println!("{}", output.to_string());
+    println!("{}", output);
 }
