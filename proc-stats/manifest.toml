@@ -1,0 +1,6 @@
+name = "serval-facts"
+namespace = "sh.serval"
+binary = "../build/proc-stats.wasm"
+version = "1"
+description = "pull system stats from /proc"
+permissions = ["proc:read"]
