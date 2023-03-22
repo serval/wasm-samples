@@ -1,0 +1,6 @@
+name = "http-test"
+namespace = "sh.serval"
+binary = "../build/http-test.wasm"
+version = "1"
+description = "make an HTTP request"
+permissions = ["http:*"]
