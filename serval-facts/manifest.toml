@@ -1,5 +1,5 @@
 name = "serval-facts"
-namespace = "sh.serval"
+namespace = ""
 binary = "../build/serval-facts.wasm"
 version = "1"
 description = "fun facts"

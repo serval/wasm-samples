@@ -1,3 +1,4 @@
 build
 ruby.wasm
 head-wasm32-unknown-wasi-full
+ruby-head-wasm32-unknown-wasi-full.tar.gz
