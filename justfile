@@ -28,7 +28,8 @@ build PROJECT='':
         #                     --ceejbot, 2023
         just build
         # We also assume a just list-wasm command is provided.
-        just list-wasm | while read line ; do cp $line ../build/ ; done
+        just --quiet list-wasm | xargs -I'{}' wasm-opt '{}' -Oz -o '{}'
+        just --quiet list-wasm | xargs -I'{}' cp '{}' ../build/
     else
         # If there is no justfile, we simply `cargo build` and grab the output.
         cargo build --release --target wasm32-wasi --quiet
