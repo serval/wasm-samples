@@ -3,10 +3,13 @@ help:
     just -l
 
 # Install tool dependencies
-@deps:
-    cargo install wasm-opt
+deps:
+    #!/bin/bash
+    if ! hash wasm-opt 2>/dev/null; then
+        cargo install wasm-opt
+    fi
 
-# Downloads 
+# Downloads
 @build: deps
     just get-models
     cargo build --target wasm32-wasi --release

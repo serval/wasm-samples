@@ -7,25 +7,24 @@ build:
     # Based on https://github.com/kateinoigakukun/wasi-vfs/wiki/Getting-Started-with-CRuby
     OUTPUT_FILENAME=build/ruby-example.wasm
 
-    if ! which wasi-preset-args > /dev/null ; then
+    if ! hash wasi-preset-args > /dev/null ; then
         echo "Installing wasi-preset-args..."
         cargo install --git https://github.com/kateinoigakukun/wasi-preset-args.git --all-features
     fi
 
-    if ! which wasi-vfs > /dev/null; then
+    if ! hash wasi-vfs > /dev/null; then
         echo "Installing wasi-vfs..."
         cargo install wasi-vfs-cli --git https://github.com/kateinoigakukun/wasi-vfs.git
     fi
 
     if [[ ! -f "ruby.wasm" ]]; then
         echo "Downloading ruby.wasm..."
-        curl -LO https://github.com/ruby/ruby.wasm/releases/download/2022-03-28-a/ruby-head-wasm32-unknown-wasi-full.tar.gz
-        mv head-wasm32-unknown-wasi-full/usr/local/bin/ruby ruby.wasm
+        curl -k https://github.com/ruby/ruby.wasm/releases/download/2022-03-28-a/ruby-head-wasm32-unknown-wasi-full.tar.gz
+        tar xf ruby-head-wasm32-unknown-wasi-full.tar.gz
+        cp head-wasm32-unknown-wasi-full/usr/local/bin/ruby ./ruby.wasm
     fi
 
-    if [[ ! -d "build" ]]; then
-        mkdir build
-    fi
+    mkdir -p build
 
     wasi-vfs pack ruby.wasm --mapdir /src::./src --mapdir /usr::./head-wasm32-unknown-wasi-full/usr -o ${OUTPUT_FILENAME}
     wasi-preset-args ${OUTPUT_FILENAME} -o ${OUTPUT_FILENAME} -- /src/main.rb

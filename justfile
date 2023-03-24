@@ -3,10 +3,8 @@ help:
     just -l
 
 # Build all examples & put them in ./build
-build PROJECT='':
+build PROJECT='': deps
     #!/bin/bash
-    set -e
-
     if [ "{{PROJECT}}" == "" ]; then
         # If not given a particular project to build, build everything.
         dirs=$(echo */)
@@ -22,14 +20,13 @@ build PROJECT='':
     mkdir -p build
     example={{PROJECT}}
     cd $example
-    echo "Building ${example}.wasm ..."
+    printf "Building {{GREEN}}${example}.wasm{{CLEAR}} ...\n"
     if test -f "justfile"; then
         # > (you should assume just is there)
         #                     --ceejbot, 2023
         just build
-        # We also assume a just list-wasm command is provided.
-        just --quiet list-wasm | xargs -I'{}' wasm-opt '{}' -Oz -o '{}'
-        just --quiet list-wasm | xargs -I'{}' cp '{}' ../build/
+        find build/release/*.wasm 2>/dev/null | xargs -I'{}' wasm-opt '{}' -Oz -o '{}'
+        find build/release/*.wasm 2>/dev/null | xargs -I'{}' cp '{}' ../build/
     else
         # If there is no justfile, we simply `cargo build` and grab the output.
         cargo build --release --target wasm32-wasi --quiet
@@ -39,8 +36,19 @@ build PROJECT='':
     fi
     cd ..
 
+list-wasm:
+    find build/release/*.wasm 2>/dev/null
+
+deps:
+    #!/bin/bash
+    set -e
+    if ! hash wasm-opt 2>/dev/null; then
+        cargo install wasm-opt
+    fi
+
 build-and-run PROJECT BINARY='':
     #!/bin/bash
+    set -e
     just build {{PROJECT}}
     if [ "{{BINARY}}" == "" ]; then
         BINARY=build/{{PROJECT}}.wasm
@@ -52,3 +60,6 @@ build-and-run PROJECT BINARY='':
 
 clean:
     rm build/*.wasm
+
+GREEN := "\\x1b[32m"
+CLEAR := "\\x1b[0m"
