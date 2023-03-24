@@ -50,5 +50,11 @@ build-and-run PROJECT BINARY='':
     pushd ../serval-mesh
     cargo run --bin serval -- run ../wasm-samples/${BINARY}
 
+install-deps:
+    #!/bin/bash
+    set -e
+    brew install binaryen
+    rustup --quiet target add wasm32-wasi
+
 clean:
     rm build/*.wasm
