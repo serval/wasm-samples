@@ -1,4 +1,4 @@
-name = "serval-facts"
+name = "proc-stats"
 namespace = "sh.serval"
 binary = "../build/proc-stats.wasm"
 version = "1"
