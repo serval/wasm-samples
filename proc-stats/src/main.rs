@@ -105,8 +105,7 @@ fn main() {
             serde_json::from_str(&network_interface_stats_json).unwrap(),
         );
         output
-        //
     });
 
-    println!("{}", output);
+    println!("{}", serde_json::to_string_pretty(&output).unwrap());
 }
