@@ -80,12 +80,12 @@ impl SysPressure {
                     // some avg10=0.04 avg60=0.08 avg300=0.12 total=10739245730
                     let re = Regex::new(
                         r"(?x)
-                (some|full)+\s                      # $1 Should map to a SysPressureCategory
-                avg10=([0-9]*\.[0-9]+|[0-9]+)\s     # $2 a f64 for the 10 second average
-                avg60=([0-9]*\.[0-9]+|[0-9]+)\s     # $3 a f64 for the 60 second average
-                avg300=([0-9]*\.[0-9]+|[0-9]+)\s    # $4 a f64 for the 300 second average
-                total=([0-9]+)                      # $5 a u64 for the total
-                ",
+                        (some|full)+\s                      # $1 Should map to a SysPressureCategory
+                        avg10=([0-9]*\.[0-9]+|[0-9]+)\s     # $2 a f64 for the 10 second average
+                        avg60=([0-9]*\.[0-9]+|[0-9]+)\s     # $3 a f64 for the 60 second average
+                        avg300=([0-9]*\.[0-9]+|[0-9]+)\s    # $4 a f64 for the 300 second average
+                        total=([0-9]+)                      # $5 a u64 for the total
+                        ",
                     )
                     .unwrap();
                     let cap = re.captures(line);
