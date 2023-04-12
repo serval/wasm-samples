@@ -8,10 +8,8 @@ use network::network_interface_stats;
 mod memory;
 use memory::{mem_info, mem_pressure};
 
-use crate::cpu::cpu_pressure;
+use crate::cpu::{cpu_info, cpu_pressure};
 use crate::io::io_pressure;
-
-// /proc/cpuinfo!
 
 // /proc/cgroups?
 // /proc/crypto? lists available ciphers
@@ -22,6 +20,7 @@ use crate::io::io_pressure;
 // /proc/modules?
 
 fn main() {
+    let cpu_info_json = serde_json::to_string(&cpu_info()).unwrap();
     let cpu_pressure_json = serde_json::to_string(&cpu_pressure()).unwrap();
     let io_pressure_json = serde_json::to_string(&io_pressure()).unwrap();
     let mem_info_json = serde_json::to_string(&mem_info()).unwrap();
@@ -30,6 +29,10 @@ fn main() {
 
     let mut output = serde_json::Value::Object(Map::new());
     output.as_object_mut().map(|output| {
+        output.insert(
+            String::from("cpu_info"),
+            serde_json::from_str(&cpu_info_json).unwrap(),
+        );
         output.insert(
             String::from("cpu_pressure"),
             serde_json::from_str(&cpu_pressure_json).unwrap(),
