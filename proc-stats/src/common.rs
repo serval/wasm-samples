@@ -3,6 +3,8 @@ use regex::Regex;
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, fmt, fs, path::Path, str::FromStr};
 
+/// A system resource as identified in <https://docs.kernel.org/accounting/psi.html> for use
+/// in pressure statistics collection.
 #[derive(Serialize, Deserialize)]
 pub enum SysResource {
     Cpu,
@@ -60,6 +62,10 @@ pub struct SysPressureData {
     avg300: f64,
     total: u64,
 }
+/// This structure represents a ["Pressure Stall Information"](kernel-psi) reading against one
+/// of the resources specified in [`crate::common::SysResource`](enum.SysResource.html).
+///
+/// [kernel-psi]: https://docs.kernel.org/accounting/psi.html
 #[derive(Serialize, Deserialize)]
 pub struct SysPressure {
     resource: SysResource,

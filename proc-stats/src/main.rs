@@ -11,7 +11,7 @@ mod sys;
 
 use crate::cpu::{cpu_info, cpu_pressure};
 use crate::io::io_pressure;
-use crate::sys::uptime;
+use crate::sys::{detect_platform, uptime};
 
 // /proc/cgroups?
 // /proc/crypto? lists available ciphers
@@ -29,6 +29,7 @@ fn main() {
     let mem_pressure_json = serde_json::to_string(&mem_pressure()).unwrap();
     let network_interface_stats_json = serde_json::to_string(&network_interface_stats()).unwrap();
     let sys_uptime_json = serde_json::to_string(&uptime()).unwrap();
+    let sys_platform_json = serde_json::to_string(&detect_platform()).unwrap();
 
     let mut output = serde_json::Value::Object(Map::new());
     output.as_object_mut().map(|output| {
@@ -60,7 +61,10 @@ fn main() {
             String::from("sys_uptime"),
             serde_json::from_str(&sys_uptime_json).unwrap(),
         );
-        output
+        output.insert(
+            String::from("sys_platform"),
+            serde_json::from_str(&sys_platform_json).unwrap(),
+        );
     });
 
     println!("{}", serde_json::to_string_pretty(&output).unwrap());
