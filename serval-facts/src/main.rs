@@ -37,6 +37,7 @@ fn main() {
         line_length += word.len();
     }
 
+    println!("HTTP/1.0 200 OK");
     println!("Content-Type: text/plain");
     println!();
     println!("{}", wrapped_fact);
